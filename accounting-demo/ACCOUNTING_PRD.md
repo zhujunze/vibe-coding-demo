@@ -342,7 +342,7 @@ graph TD
 
 ## 6.1 前端技术栈
 
-- **框架**：Vue3 + TypeScript
+- **框架**：Vue3 + JavaScript
 - **跨平台**：UniApp（支持iOS/Android/小程序）
 - **状态管理**：Pinia
 - **图表库**：ECharts
