@@ -11,6 +11,7 @@ import com.easyaccounting.model.dto.RefreshTokenRequest;
 import com.easyaccounting.model.dto.RegisterRequest;
 import com.easyaccounting.model.dto.ResetPasswordRequest;
 import com.easyaccounting.model.dto.ResetPasswordTokenRequest;
+import com.easyaccounting.model.enums.SmsType;
 import com.easyaccounting.model.vo.LoginResponse;
 import com.easyaccounting.model.vo.UserVO;
 import com.easyaccounting.service.IAuthService;
@@ -139,7 +140,7 @@ public class AuthServiceImpl implements IAuthService {
         log.info("Register attempt for phone: {}", request.getPhone());
 
         // 1. 验证短信验证码
-        if (!smsService.verify(request.getPhone(), request.getSmsCode())) {
+        if (!smsService.verify(request.getPhone(), request.getSmsCode(), SmsType.REGISTER)) {
             throw new BusinessException(ErrorCode.SMS_CODE_ERROR);
         }
 
@@ -166,7 +167,7 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public String sendResetToken(ResetPasswordTokenRequest request) {
         // 1. 验证短信验证码
-        if (!smsService.verify(request.getPhone(), request.getSmsCode())) {
+        if (!smsService.verify(request.getPhone(), request.getSmsCode(), SmsType.RESET_PASSWORD)) {
             throw new BusinessException(ErrorCode.SMS_CODE_ERROR);
         }
         

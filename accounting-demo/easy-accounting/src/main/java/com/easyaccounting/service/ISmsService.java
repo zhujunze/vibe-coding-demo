@@ -1,21 +1,24 @@
 package com.easyaccounting.service;
 
+import com.easyaccounting.model.enums.SmsType;
+
 public interface ISmsService {
     /**
      * 发送短信验证码
      *
-     * @param phone        手机号
-     * @param templateCode 模板编码
-     * @param params       参数
+     * @param phone 手机号
+     * @param type  验证码类型
+     * @return 验证码
      */
-    void send(String phone, String templateCode, String... params);
+    String send(String phone, SmsType type);
 
     /**
      * 验证短信验证码
      *
      * @param phone   手机号
      * @param smsCode 验证码
+     * @param type    验证码类型
      * @return 是否验证通过
      */
-    boolean verify(String phone, String smsCode);
+    boolean verify(String phone, String smsCode, SmsType type);
 }

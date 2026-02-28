@@ -40,9 +40,9 @@ public class AuthController {
 
     @Operation(summary = "发送短信验证码", description = "向指定手机号发送验证码")
     @PostMapping("/send-sms")
-    public Result<Void> sendSms(@RequestBody @Valid SendSmsRequest request) {
-        smsService.send(request.getPhone(), "REGISTER"); // 默认模板
-        return Result.success(null);
+    public Result<String> sendSms(@RequestBody @Valid SendSmsRequest request) {
+        String code = smsService.send(request.getPhone(), request.getType());
+        return Result.success(code);
     }
 
     @Operation(summary = "获取重置密码Token", description = "验证手机号和验证码，获取重置密码的一次性Token")

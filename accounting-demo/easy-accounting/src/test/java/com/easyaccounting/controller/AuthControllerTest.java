@@ -6,6 +6,7 @@ import com.easyaccounting.model.dto.LoginRequest;
 import com.easyaccounting.model.dto.RefreshTokenRequest;
 import com.easyaccounting.model.dto.RegisterRequest;
 import com.easyaccounting.model.dto.SendSmsRequest;
+import com.easyaccounting.model.enums.SmsType;
 import com.easyaccounting.model.vo.LoginResponse;
 import com.easyaccounting.model.vo.UserVO;
 import com.easyaccounting.service.IAuthService;
@@ -147,13 +148,17 @@ public class AuthControllerTest {
     void sendSms_Success() throws Exception {
         SendSmsRequest request = new SendSmsRequest();
         request.setPhone("13800138000");
+        request.setType(SmsType.REGISTER);
+
+        when(smsService.send(any(String.class), any(SmsType.class))).thenReturn("123456");
 
         mockMvc.perform(post("/api/auth/send-sms")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.data").value("123456"));
     }
 
     @Test

@@ -150,3 +150,17 @@ Error starting ApplicationContext. To display the condition evaluation report re
 2026-02-28 16:51:24.411 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
 2026-02-28 16:51:24.411 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 0 ms
 2026-02-28 16:51:24.426 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Started AuthControllerTest in 2.779 seconds (process running for 3.331)
+2026-02-28 16:54:59.859 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:54:59.875 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - Starting GlobalExceptionHandlerTest using Java 21.0.6 with PID 15208 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:54:59.875 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:55:00.389 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 17:02:02.444 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 17:02:02.465 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 21.0.6 with PID 32808 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 17:02:02.466 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 17:02:05.422 [main] INFO  o.s.security.web.DefaultSecurityFilterChain [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@408d945b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@15ad5acb, org.springframework.security.web.context.SecurityContextHolderFilter@2e4b5da1, org.springframework.security.web.header.HeaderWriterFilter@77a4bac, org.springframework.security.web.authentication.logout.LogoutFilter@4d75c604, com.easyaccounting.common.filter.JwtAuthenticationFilter@59c862af, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4ae2c01b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1cab19e2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4bb9f7d4, org.springframework.security.web.session.SessionManagementFilter@24d7657b, org.springframework.security.web.access.ExceptionTranslationFilter@924f3f1, org.springframework.security.web.access.intercept.AuthorizationFilter@146833a2]
+2026-02-28 17:02:05.889 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 17:02:05.890 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 17:02:05.893 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 3 ms
+2026-02-28 17:02:05.949 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Started AuthControllerTest in 3.753 seconds (process running for 4.287)
