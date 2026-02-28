@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyaccounting.mapper.CategoryMapper">
+
+    <resultMap id="BaseResultMap" type="com.easyaccounting.entity.Category">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="icon" property="icon" />
+        <result column="color" property="color" />
+        <result column="sort_order" property="sortOrder" />
+        <result column="is_system" property="isSystem" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, name, type, icon, color, sort_order, is_system, created_at, updated_at
+    </sql>
+
+</mapper>

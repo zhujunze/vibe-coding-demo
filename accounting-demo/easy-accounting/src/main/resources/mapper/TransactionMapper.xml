@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyaccounting.mapper.TransactionMapper">
+
+    <resultMap id="BaseResultMap" type="com.easyaccounting.entity.Transaction">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="category_id" property="categoryId" />
+        <result column="amount" property="amount" />
+        <result column="type" property="type" />
+        <result column="date" property="date" />
+        <result column="note" property="note" />
+        <result column="sync_status" property="syncStatus" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, category_id, amount, type, date, note, sync_status, created_at, updated_at
+    </sql>
+
+</mapper>

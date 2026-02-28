@@ -1,0 +1,76 @@
+spring:
+  datasource:
+    # 生产环境数据库连接 (建议通过环境变量注入: SPRING_DATASOURCE_URL)
+    url: ${PROD_DB_URL:jdbc:mysql://prod-db:3306/accounting_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai}
+    username: ${PROD_DB_USERNAME:root}
+    # 密码必须加密 (ENC(...) 为 Jasypt 加密标识，实际部署时注入解密密钥)
+    password: ${PROD_DB_PASSWORD:ENC(encrypted_password_placeholder)}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    # HikariCP 生产级调优
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 50
+      idle-timeout: 600000
+      pool-name: ProdHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      # 开启预处理语句缓存
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+
+  data:
+    redis:
+      # 生产环境 Redis 连接
+      host: ${PROD_REDIS_HOST:prod-redis}
+      port: ${PROD_REDIS_PORT:6379}
+      database: 0
+      password: ${PROD_REDIS_PASSWORD:ENC(encrypted_redis_password)}
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 50
+          max-wait: 5000
+          max-idle: 20
+          min-idle: 5
+
+# MyBatis-Plus 生产环境配置
+mybatis-plus:
+  configuration:
+    # 关闭 SQL 打印，提升性能
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+# 日志级别 (生产环境仅记录 INFO 及以上)
+logging:
+  level:
+    root: INFO
+    com.easyaccounting: INFO
+  # 生产环境日志输出到文件 (由 logback-spring.xml 控制，此处可配置路径)
+  file:
+    name: /var/logs/easy-accounting/app.log
+
+# Swagger 配置 (生产环境禁用)
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# 执行器端点配置 (Prometheus 监控)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  metrics:
+    tags:
+      application: ${spring.application.name}

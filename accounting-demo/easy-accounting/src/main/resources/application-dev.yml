@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    # 开发环境数据库连接 (本地)
+    url: jdbc:mysql://localhost:3306/accounting_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 10
+      idle-timeout: 30000
+      pool-name: DevHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  data:
+    redis:
+      # 开发环境 Redis 连接 (本地)
+      host: 132.232.162.49
+      port: 6379
+      password: JwtFBU05jfa8jjfmVTPRWss3BuvTpAcZ
+      timeout: 3000
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+
+# MyBatis-Plus 开发环境配置
+mybatis-plus:
+  configuration:
+    # 开启 SQL 日志打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志级别
+logging:
+  level:
+    root: INFO
+    com.easyaccounting: DEBUG
+    com.easyaccounting.mapper: DEBUG
+    org.springframework.web: DEBUG
+
+# Chaos Engineering (Development Only)
+chaos:
+  enabled: false
+  rate: 0.1
+
+# Swagger 配置 (开发环境开启)
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

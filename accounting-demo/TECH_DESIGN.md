@@ -215,7 +215,7 @@ easy-accounting-uniapp/
 easy-accounting/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/accounting/
+│   │   ├── java/com/accounting/
 │   │   │   ├── common/              # 通用模块
 │   │   │   │   ├── result/          # 统一响应结果 (Result, PageResult)
 │   │   │   │   ├── exception/       # 全局异常处理 (GlobalExceptionHandler)

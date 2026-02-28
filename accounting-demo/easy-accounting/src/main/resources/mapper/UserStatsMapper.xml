@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyaccounting.mapper.UserStatsMapper">
+
+    <resultMap id="BaseResultMap" type="com.easyaccounting.entity.UserStats">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="total_days" property="totalDays" />
+        <result column="total_records" property="totalRecords" />
+        <result column="continuous_days" property="continuousDays" />
+        <result column="last_record_date" property="lastRecordDate" />
+        <result column="current_month_expense" property="currentMonthExpense" />
+        <result column="current_month_income" property="currentMonthIncome" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, total_days, total_records, continuous_days, last_record_date, current_month_expense, current_month_income, updated_at
+    </sql>
+
+</mapper>
