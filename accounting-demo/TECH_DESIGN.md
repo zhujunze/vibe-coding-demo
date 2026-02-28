@@ -96,55 +96,55 @@ graph TD
 ```
 easy-accounting-uniapp/
 ├── pages/                           # 业务页面目录（按5-Tab组织）
-│   ├── tab-bar/                     # TabBar页面（5个主Tab）
+│   ├── tabBar/                      # TabBar页面（5个主Tab）
 │   │   ├── bill/                    # 账单Tab（首页）
 │   │   │   ├── index.vue            # 账单首页（收支总览+明细列表）
-│   │   │   └── detail.vue           # 账单详情页
+│   │   │   └── Detail.vue           # 账单详情页
 │   │   ├── chart/                   # 图表Tab
 │   │   │   ├── index.vue            # 图表首页（趋势图+饼图+排行）
-│   │   │   └── trend.vue            # 趋势详情页
+│   │   │   └── Trend.vue            # 趋势详情页
 │   │   ├── bookkeeping/             # 记账Tab
 │   │   │   ├── index.vue            # 记账页面（类型选择+分类网格+键盘）
-│   │   │   └── edit.vue             # 编辑账单页
+│   │   │   └── Edit.vue             # 编辑账单页
 │   │   ├── budget/                  # 预算Tab
 │   │   │   ├── index.vue            # 预算首页（预算列表+使用情况）
-│   │   │   └── setting.vue          # 预算设置页
+│   │   │   └── Setting.vue          # 预算设置页
 │   │   └── me/                      # 我的Tab
 │   │       ├── index.vue            # 个人中心（信息+统计+设置入口）
-│   │       ├── category.vue         # 分类管理页
-│   │       ├── settings.vue         # 设置页面
-│   │       └── profile.vue          # 个人信息编辑页
+│   │       ├── Category.vue         # 分类管理页
+│   │       ├── Setting.vue          # 设置页面
+│   │       ├── Profile.vue          # 个人信息编辑页
 │   ├── auth/                        # 认证相关页面
 │   │   ├── login.vue                # 手机号登录页
-│   │   └── sms-verify.vue           # 短信验证码页
+│   │   └── SmsVerify.vue            # 短信验证码页
 │   └── common/                      # 通用页面
-│       └── webview.vue              # 通用WebView页面
+│       └── Webview.vue              # 通用WebView页面
 ├── components/                      # 公共组件（按功能模块组织）
-│   ├── bill/                        # 账单相关组件
-│   │   ├── bill-summary.vue         # 收支总览卡片
-│   │   ├── bill-list.vue            # 账单列表组件
-│   │   └── bill-item.vue            # 账单列表项
-│   ├── chart/                       # 图表相关组件
-│   │   ├── trend-chart.vue          # 趋势图组件
-│   │   ├── pie-chart.vue            # 饼图组件
-│   │   └── ranking-list.vue         # 排行榜组件
-│   ├── bookkeeping/                 # 记账相关组件
-│   │   ├── type-switch.vue          # 收入支出切换
-│   │   ├── category-grid.vue        # 分类网格
-│   │   ├── number-keyboard.vue       # 数字键盘
-│   │   └── quick-note.vue           # 快速备注
-│   ├── budget/                      # 预算相关组件
-│   │   ├── budget-progress.vue      # 预算进度条
-│   │   ├── budget-warning.vue       # 预算预警提示
-│   │   └── budget-setting.vue       # 预算设置表单
-│   ├── common/                      # 通用组件
-│   │   ├── tab-bar.vue              # 自定义TabBar
-│   │   ├── date-picker.vue          # 日期选择器
-│   │   ├── loading-more.vue         # 加载更多
-│   │   └── empty-state.vue          # 空状态提示
-│   └── layout/                      # 布局组件
-│       ├── page-header.vue          # 页面头部
-│       └── page-container.vue       # 页面容器
+│   ├── Bill/                        # 账单相关组件
+│   │   ├── BillSummary.vue          # 收支总览卡片
+│   │   ├── BillList.vue             # 账单列表组件
+│   │   └── BillItem.vue             # 账单列表项
+│   ├── Chart/                       # 图表相关组件
+│   │   ├── TrendChart.vue           # 趋势图组件
+│   │   ├── PieChart.vue             # 饼图组件
+│   │   └── RankingList.vue          # 排行榜组件
+│   ├── Bookkeeping/                 # 记账相关组件
+│   │   ├── TypeSwitch.vue           # 收入支出切换
+│   │   ├── CategoryGrid.vue         # 分类网格
+│   │   ├── NumberKeyboard.vue       # 数字键盘
+│   │   └── QuickNote.vue            # 快速备注
+│   ├── Budget/                      # 预算相关组件
+│   │   ├── BudgetProgress.vue       # 预算进度条
+│   │   ├── BudgetWarning.vue        # 预算预警提示
+│   │   └── BudgetSetting.vue        # 预算设置表单
+│   ├── Common/                      # 通用组件
+│   │   ├── BaseTabBar.vue           # 自定义TabBar
+│   │   ├── BaseDatePicker.vue       # 日期选择器
+│   │   ├── BaseLoadingMore.vue      # 加载更多
+│   │   └── BaseEmptyState.vue       # 空状态提示
+│   └── Layout/                      # 布局组件
+│       ├── BasePageHeader.vue       # 页面头部
+│       └── BasePageContainer.vue    # 页面容器
 ├── composables/                     # 组合式函数（Vue3）
 │   ├── useAuth.js                   # 认证相关逻辑
 │   ├── useTransactions.js           # 交易记录逻辑
