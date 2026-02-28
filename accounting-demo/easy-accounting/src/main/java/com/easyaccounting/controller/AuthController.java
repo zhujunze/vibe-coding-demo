@@ -57,4 +57,10 @@ public class AuthController {
         authService.resetPassword(request);
         return Result.success(null);
     }
+
+    @Operation(summary = "刷新令牌", description = "使用刷新令牌获取新的访问令牌")
+    @PostMapping("/refresh-token")
+    public Result<LoginResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+        return Result.success(authService.refreshToken(request));
+    }
 }

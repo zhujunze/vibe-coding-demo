@@ -27,6 +27,9 @@ public class JwtUtil {
     @Value("${jwt.expiration:7200000}") // 2 hours
     private long expiration;
 
+    @Value("${jwt.refresh-expiration:604800000}") // 7 days
+    private long refreshExpiration;
+
     private SecretKey key;
 
     @PostConstruct
@@ -39,15 +42,23 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("phone", phone);
-        return createToken(claims, String.valueOf(userId));
+        claims.put("type", "access");
+        return createToken(claims, String.valueOf(userId), expiration);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String generateRefreshToken(Long userId) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
+        claims.put("type", "refresh");
+        return createToken(claims, String.valueOf(userId), refreshExpiration);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject, long expirationTime) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key)
                 .compact();
     }
@@ -58,6 +69,17 @@ public class JwtUtil {
             return true;
         } catch (Exception e) {
             log.warn("Invalid JWT token: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean validateRefreshToken(String token) {
+        try {
+            Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
+            String type = claims.get("type", String.class);
+            return "refresh".equals(type);
+        } catch (Exception e) {
+            log.warn("Invalid Refresh Token: {}", e.getMessage());
             return false;
         }
     }

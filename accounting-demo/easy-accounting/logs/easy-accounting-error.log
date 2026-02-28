@@ -275,3 +275,18 @@ Action:
 
 Consider defining a bean of type 'com.easyaccounting.common.util.JwtUtil' in your configuration.
 
+2026-02-28 16:48:36.621 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter [] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.easyaccounting.controller.BudgetController required a bean of type 'com.easyaccounting.service.IBudgetService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.easyaccounting.service.IBudgetService' in your configuration.
+

@@ -1,6 +1,7 @@
 package com.easyaccounting.service;
 
 import com.easyaccounting.model.dto.LoginRequest;
+import com.easyaccounting.model.dto.RefreshTokenRequest;
 import com.easyaccounting.model.dto.RegisterRequest;
 import com.easyaccounting.model.dto.ResetPasswordRequest;
 import com.easyaccounting.model.dto.ResetPasswordTokenRequest;
@@ -15,6 +16,14 @@ public interface IAuthService {
      * @return 登录响应
      */
     LoginResponse login(LoginRequest request);
+
+    /**
+     * 刷新令牌
+     *
+     * @param request 刷新请求
+     * @return 登录响应
+     */
+    LoginResponse refreshToken(RefreshTokenRequest request);
 
     /**
      * 用户注册

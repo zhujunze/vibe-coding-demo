@@ -7,6 +7,7 @@ import com.easyaccounting.common.exception.ErrorCode;
 import com.easyaccounting.common.util.JwtUtil;
 import com.easyaccounting.entity.User;
 import com.easyaccounting.model.dto.LoginRequest;
+import com.easyaccounting.model.dto.RefreshTokenRequest;
 import com.easyaccounting.model.dto.RegisterRequest;
 import com.easyaccounting.model.dto.ResetPasswordRequest;
 import com.easyaccounting.model.dto.ResetPasswordTokenRequest;
@@ -62,7 +63,7 @@ public class AuthServiceImpl implements IAuthService {
 
         // 5. 生成 Token
         String accessToken = jwtUtil.generateToken(user.getId(), user.getPhone());
-        String refreshToken = accessToken; // 简化处理，实际应有不同有效期
+        String refreshToken = jwtUtil.generateRefreshToken(user.getId());
 
         // 6. 构建响应
         UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
@@ -94,6 +95,42 @@ public class AuthServiceImpl implements IAuthService {
             user.setLockoutTime(null);
             userService.updateById(user);
         }
+    }
+
+    @Override
+    public LoginResponse refreshToken(RefreshTokenRequest request) {
+        String token = request.getRefreshToken();
+        
+        // 1. 验证 Refresh Token
+        if (!jwtUtil.validateRefreshToken(token)) {
+            throw new BusinessException(ErrorCode.FORBIDDEN.getCode(), "无效的刷新令牌");
+        }
+
+        // 2. 获取用户ID
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        User user = userService.getById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.USER_NOT_EXIST);
+        }
+
+        // 3. 检查锁定状态
+        if (user.getLockoutTime() != null && user.getLockoutTime().isAfter(LocalDateTime.now())) {
+            throw new BusinessException(ErrorCode.FORBIDDEN.getCode(), "账号已锁定，请稍后再试");
+        }
+
+        // 4. 生成新 Token
+        String accessToken = jwtUtil.generateToken(user.getId(), user.getPhone());
+        String refreshToken = jwtUtil.generateRefreshToken(user.getId());
+
+        // 5. 构建响应
+        UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
+        userVO.setPhone(StrUtil.hide(user.getPhone(), 3, 7));
+
+        return LoginResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .userInfo(userVO)
+                .build();
     }
 
     @Override
