@@ -1,0 +1,98 @@
+{
+	"pages": [
+		{
+			"path": "pages/tabBar/bill/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "账单",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/tabBar/bill/Detail",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "账单详情"
+			}
+		},
+		{
+			"path": "pages/tabBar/chart/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "图表"
+			}
+		},
+		{
+			"path": "pages/tabBar/bookkeeping/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "记账"
+			}
+		},
+		{
+			"path": "pages/tabBar/budget/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "预算"
+			}
+		},
+		{
+			"path": "pages/tabBar/me/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/auth/Login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "极简记账",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#FF6B6B",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/tabBar/bill/index",
+				"text": "账单",
+				"iconPath": "static/tabbar/bill.png",
+				"selectedIconPath": "static/tabbar/bill-active.png"
+			},
+			{
+				"pagePath": "pages/tabBar/chart/index",
+				"text": "图表",
+				"iconPath": "static/tabbar/chart.png",
+				"selectedIconPath": "static/tabbar/chart-active.png"
+			},
+			{
+				"pagePath": "pages/tabBar/bookkeeping/index",
+				"text": "记账",
+				"iconPath": "static/tabbar/bookkeeping.png",
+				"selectedIconPath": "static/tabbar/bookkeeping-active.png"
+			},
+			{
+				"pagePath": "pages/tabBar/budget/index",
+				"text": "预算",
+				"iconPath": "static/tabbar/budget.png",
+				"selectedIconPath": "static/tabbar/budget-active.png"
+			},
+			{
+				"pagePath": "pages/tabBar/me/index",
+				"text": "我的",
+				"iconPath": "static/tabbar/me.png",
+				"selectedIconPath": "static/tabbar/me-active.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}
