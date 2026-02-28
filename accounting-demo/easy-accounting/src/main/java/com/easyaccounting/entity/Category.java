@@ -3,6 +3,7 @@ package com.easyaccounting.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.easyaccounting.common.enums.CategoryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class Category {
     private String name;
 
     @Schema(description = "类型 (expense-支出，income-收入)", example = "expense")
-    private String type;
+    private CategoryType type;
 
     @Schema(description = "图标标识", example = "food")
     private String icon;

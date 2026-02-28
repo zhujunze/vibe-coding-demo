@@ -21,4 +21,13 @@ public enum CategoryType {
         this.code = code;
         this.desc = desc;
     }
+
+    public static CategoryType of(String code) {
+        for (CategoryType type : values()) {
+            if (type.code.equalsIgnoreCase(code) || type.name().equalsIgnoreCase(code)) {
+                return type;
+            }
+        }
+        return null;
+    }
 }

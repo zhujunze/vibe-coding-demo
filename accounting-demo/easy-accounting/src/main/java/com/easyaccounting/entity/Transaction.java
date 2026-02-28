@@ -3,6 +3,7 @@ package com.easyaccounting.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.easyaccounting.common.enums.TransactionType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -33,8 +34,9 @@ public class Transaction {
     @Schema(description = "金额", example = "128.50")
     private BigDecimal amount;
 
+
     @Schema(description = "类型 (expense-支出，income-收入)", example = "expense")
-    private String type;
+    private TransactionType type;
 
     @Schema(description = "记账日期", example = "2023-10-01")
     private LocalDate date;

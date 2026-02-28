@@ -1,0 +1,114 @@
+2026-02-28 15:32:07.654 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 15:32:07.699 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - Starting GlobalExceptionHandlerTest using Java 17.0.13 with PID 7272 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 15:32:07.699 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - The following 1 profile is active: "dev"
+2026-02-28 15:32:09.013 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 15:32:09.014 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 15:32:09.017 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 2 ms
+2026-02-28 15:32:09.039 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 15:32:44.128 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 15:32:44.155 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - Starting GlobalExceptionHandlerTest using Java 17.0.13 with PID 33700 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 15:32:44.155 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - The following 1 profile is active: "dev"
+2026-02-28 15:32:45.216 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 15:32:45.217 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 15:32:45.222 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 3 ms
+2026-02-28 15:32:45.277 [main] INFO  c.e.exception.GlobalExceptionHandlerTest [] - Started GlobalExceptionHandlerTest in 1.373 seconds (process running for 1.881)
+2026-02-28 16:02:03.684 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:02:03.713 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 17.0.13 with PID 31284 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:02:03.716 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:02:05.163 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 16:02:42.359 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:02:42.383 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 17.0.13 with PID 34280 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:02:42.384 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:02:43.851 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 16:03:07.997 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:03:08.016 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 17.0.13 with PID 28320 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:03:08.017 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:03:09.504 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 16:03:41.608 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:03:41.640 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 17.0.13 with PID 12800 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:03:41.641 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:03:42.999 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger [] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-28 16:06:29.761 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:06:29.780 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Starting AuthControllerTest using Java 17.0.13 with PID 27472 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:06:29.781 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:06:32.385 [main] INFO  o.s.security.web.DefaultSecurityFilterChain [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f6f65a4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@990b86b, org.springframework.security.web.context.SecurityContextHolderFilter@5c5f12e, org.springframework.security.web.header.HeaderWriterFilter@74bfdd66, org.springframework.security.web.authentication.logout.LogoutFilter@6cfd08e9, com.easyaccounting.common.filter.JwtAuthenticationFilter@3dea1ecc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@68f69ca3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1e3566e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@105c6c9e, org.springframework.security.web.session.SessionManagementFilter@1dd76982, org.springframework.security.web.access.ExceptionTranslationFilter@7747cc1b, org.springframework.security.web.access.intercept.AuthorizationFilter@1c05097c]
+2026-02-28 16:06:32.660 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 16:06:32.660 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 16:06:32.661 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 1 ms
+2026-02-28 16:06:32.679 [main] INFO  com.easyaccounting.controller.AuthControllerTest [] - Started AuthControllerTest in 3.143 seconds (process running for 3.689)
+2026-02-28 16:16:48.534 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:16:48.557 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - Starting Knife4jConfigTest using Java 17.0.13 with PID 32720 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:16:48.558 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:16:49.280 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-28 16:16:49.283 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-28 16:16:49.313 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2026-02-28 16:16:49.561 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [] - Post-processing PropertySource instances
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Annotations [org.springframework.boot.test.autoconfigure.properties.AnnotationsPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2026-02-28 16:16:49.564 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2026-02-28 16:16:49.565 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:16:49.565 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-02-28 16:16:49.565 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-02-28 16:16:49.565 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Config resource 'class path resource [application-dev.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:16:49.565 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:16:49.619 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter [] - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-02-28 16:16:49.636 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver [] - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-02-28 16:16:49.639 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector [] - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-02-28 16:16:51.478 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Starting...
+2026-02-28 16:16:51.873 [main] INFO  com.zaxxer.hikari.pool.HikariPool [] - DevHikariCP - Added connection com.mysql.cj.jdbc.ConnectionImpl@b787274
+2026-02-28 16:16:51.882 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Start completed.
+2026-02-28 16:16:54.682 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver [] - Exposing 4 endpoint(s) beneath base path '/actuator'
+2026-02-28 16:16:54.859 [main] INFO  o.s.security.web.DefaultSecurityFilterChain [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d10f182, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5570ee6d, org.springframework.security.web.context.SecurityContextHolderFilter@5dd12c19, org.springframework.security.web.header.HeaderWriterFilter@65fa56f7, org.springframework.security.web.authentication.logout.LogoutFilter@67683210, com.easyaccounting.common.filter.JwtAuthenticationFilter@7e2f16bd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@744673f3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6cb759d5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@594fcb22, org.springframework.security.web.session.SessionManagementFilter@e2696e8, org.springframework.security.web.access.ExceptionTranslationFilter@71c74011, org.springframework.security.web.access.intercept.AuthorizationFilter@31921151]
+2026-02-28 16:16:56.570 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 16:16:56.570 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 16:16:56.572 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 2 ms
+2026-02-28 16:16:56.644 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - Started Knife4jConfigTest in 8.32 seconds (process running for 8.879)
+2026-02-28 16:16:58.078 [main] INFO  org.springdoc.api.AbstractOpenApiResource [3ced0673bc12412999bf9fb68c17576a] - Init duration for springdoc-openapi is: 899 ms
+2026-02-28 16:16:58.323 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Shutdown initiated...
+2026-02-28 16:16:58.328 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Shutdown completed.
+2026-02-28 16:17:27.435 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-28 16:17:27.457 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - Starting Knife4jConfigTest using Java 17.0.13 with PID 33624 (started by Administrator in C:\Users\Administrator\Desktop\company\ai_workplace\vibe-coding-demo\accounting-demo\easy-accounting)
+2026-02-28 16:17:27.458 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - The following 1 profile is active: "dev"
+2026-02-28 16:17:28.257 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-28 16:17:28.263 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-28 16:17:28.316 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 25 ms. Found 0 Redis repository interfaces.
+2026-02-28 16:17:28.597 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor [] - Post-processing PropertySource instances
+2026-02-28 16:17:28.601 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Annotations [org.springframework.boot.test.autoconfigure.properties.AnnotationsPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2026-02-28 16:17:28.602 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2026-02-28 16:17:28.602 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Config resource 'class path resource [application-dev.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:17:28.603 [main] INFO  c.u.j.EncryptablePropertySourceConverter [] - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-02-28 16:17:28.703 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter [] - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-02-28 16:17:28.728 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver [] - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-02-28 16:17:28.733 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector [] - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-02-28 16:17:30.414 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Starting...
+2026-02-28 16:17:30.758 [main] INFO  com.zaxxer.hikari.pool.HikariPool [] - DevHikariCP - Added connection com.mysql.cj.jdbc.ConnectionImpl@b787274
+2026-02-28 16:17:30.761 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Start completed.
+2026-02-28 16:17:33.822 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver [] - Exposing 4 endpoint(s) beneath base path '/actuator'
+2026-02-28 16:17:34.024 [main] INFO  o.s.security.web.DefaultSecurityFilterChain [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@56f19f36, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2faae7f6, org.springframework.security.web.context.SecurityContextHolderFilter@bddac1c, org.springframework.security.web.header.HeaderWriterFilter@58a9e64d, org.springframework.security.web.authentication.logout.LogoutFilter@2571bdf4, com.easyaccounting.common.filter.JwtAuthenticationFilter@673a5aa7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5749e633, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d10f182, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1443539, org.springframework.security.web.session.SessionManagementFilter@4379fe2a, org.springframework.security.web.access.ExceptionTranslationFilter@1c25385a, org.springframework.security.web.access.intercept.AuthorizationFilter@3c717ef2]
+2026-02-28 16:17:36.181 [main] INFO  o.s.b.test.mock.web.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-02-28 16:17:36.181 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Initializing Servlet ''
+2026-02-28 16:17:36.182 [main] INFO  o.s.test.web.servlet.TestDispatcherServlet [] - Completed initialization in 1 ms
+2026-02-28 16:17:36.343 [main] INFO  com.easyaccounting.config.Knife4jConfigTest [] - Started Knife4jConfigTest in 9.114 seconds (process running for 9.691)
+2026-02-28 16:17:39.039 [main] INFO  org.springdoc.api.AbstractOpenApiResource [4248fe254ae7448aad89f5a57f79429d] - Init duration for springdoc-openapi is: 1796 ms
+2026-02-28 16:17:39.332 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Shutdown initiated...
+2026-02-28 16:17:39.339 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource [] - DevHikariCP - Shutdown completed.

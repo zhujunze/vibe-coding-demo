@@ -1,10 +1,13 @@
 package com.easyaccounting.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.easyaccounting.common.result.Result;
-import com.easyaccounting.entity.Transaction;
 import com.easyaccounting.model.dto.CreateTransactionRequest;
+import com.easyaccounting.model.dto.QueryTransactionRequest;
+import com.easyaccounting.model.dto.UpdateTransactionRequest;
+import com.easyaccounting.model.vo.MonthStatsVO;
+import com.easyaccounting.model.vo.TransactionDetailVO;
+import com.easyaccounting.model.vo.TransactionVO;
 import com.easyaccounting.service.ITransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,8 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 账单记录控制器
@@ -28,9 +29,14 @@ public class TransactionController {
 
     @Operation(summary = "创建账单", description = "新增一笔账单记录")
     @PostMapping
-    public Result<Boolean> create(@RequestBody @Valid CreateTransactionRequest request) {
-        // TODO: DTO 转 Entity，调用 Service
-        return Result.success(true);
+    public Result<Long> create(@RequestBody @Valid CreateTransactionRequest request) {
+        return Result.success(transactionService.createTransaction(request));
+    }
+
+    @Operation(summary = "更新账单", description = "更新账单记录")
+    @PutMapping
+    public Result<Boolean> update(@RequestBody @Valid UpdateTransactionRequest request) {
+        return Result.success(transactionService.updateTransaction(request));
     }
 
     @Operation(summary = "删除账单", description = "根据 ID 删除账单")
@@ -41,23 +47,21 @@ public class TransactionController {
 
     @Operation(summary = "获取账单详情", description = "根据 ID 获取账单详情")
     @GetMapping("/{id}")
-    public Result<Transaction> getDetail(@Parameter(description = "账单ID") @PathVariable Long id) {
-        return Result.success(transactionService.getById(id));
+    public Result<TransactionDetailVO> getDetail(@Parameter(description = "账单ID") @PathVariable Long id) {
+        return Result.success(transactionService.getTransactionDetail(id));
     }
 
-    @Operation(summary = "分页查询账单", description = "分页获取当前用户的账单列表")
+    @Operation(summary = "分页查询账单", description = "分页获取当前用户的账单列表，支持按时间、类型、分类筛选")
     @GetMapping
-    public Result<IPage<Transaction>> list(@Parameter(description = "页码") @RequestParam(defaultValue = "1") Integer page,
-                                           @Parameter(description = "页大小") @RequestParam(defaultValue = "10") Integer size) {
-        return Result.success(transactionService.page(new Page<>(page, size)));
+    public Result<IPage<TransactionVO>> list(@Parameter(description = "查询参数") @Valid QueryTransactionRequest request) {
+        return Result.success(transactionService.queryTransactions(request));
     }
     
-    @Operation(summary = "获取月度账单", description = "按月份查询账单列表")
-    @GetMapping("/monthly")
-    public Result<List<Transaction>> getMonthlyTransactions(
-            @Parameter(description = "年份") @RequestParam Integer year,
-            @Parameter(description = "月份") @RequestParam Integer month) {
-        // TODO: 实现按月查询逻辑
-        return Result.success(List.of());
+    @Operation(summary = "获取月度收支统计", description = "查询指定月份的总收入、总支出和结余")
+    @GetMapping("/stats/month")
+    public Result<MonthStatsVO> getMonthStats(
+            @Parameter(description = "年份", example = "2023") @RequestParam Integer year,
+            @Parameter(description = "月份", example = "10") @RequestParam Integer month) {
+        return Result.success(transactionService.getMonthStats(year, month));
     }
 }
