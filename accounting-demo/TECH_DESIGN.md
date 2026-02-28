@@ -94,7 +94,7 @@ graph TD
 基于PRD文档的5-Tab导航结构，优化页面组织和组件复用：
 
 ```
-uniapp-accounting/
+easy-accounting-uniapp/
 ├── pages/                           # 业务页面目录（按5-Tab组织）
 │   ├── tab-bar/                     # TabBar页面（5个主Tab）
 │   │   ├── bill/                    # 账单Tab（首页）
@@ -209,32 +209,51 @@ uniapp-accounting/
 
 ### Spring Boot 后端项目结构
 
-采用标准的 Maven 项目结构，遵循 Spring Boot 最佳实践。
+采用标准的 Maven 项目结构，遵循 Spring Boot 最佳实践，并结合分层架构思想进行优化，确保代码的可维护性和扩展性。
 
 ```
-springboot-budget/
+easy-accounting/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/budget/
-│   │   │   ├── controller/      # 控制器层
-│   │   │   │   ├── UserController.java
-│   │   │   │   ├── BillController.java
-│   │   │   │   └── CategoryController.java
-│   │   │   ├── service/         # 服务层
-│   │   │   │   ├── impl/        # 服务实现
-│   │   │   │   └── UserService.java
-│   │   │   ├── mapper/          # MyBatis Mapper
-│   │   │   ├── entity/          # 实体类
-│   │   │   ├── dto/              # 数据传输对象
-│   │   │   ├── config/          # 配置类
-│   │   │   ├── security/        # 安全配置
-│   │   │   └── util/            # 工具类
+│   │   ├── java/com/example/accounting/
+│   │   │   ├── common/              # 通用模块
+│   │   │   │   ├── result/          # 统一响应结果 (Result, PageResult)
+│   │   │   │   ├── exception/       # 全局异常处理 (GlobalExceptionHandler)
+│   │   │   │   ├── constant/        # 常量定义 (SystemConstant, RedisKey)
+│   │   │   │   └── util/            # 通用工具类 (JwtUtil, DateUtil)
+│   │   │   ├── config/              # 配置类
+│   │   │   │   ├── SecurityConfig.java   # Spring Security配置
+│   │   │   │   ├── SwaggerConfig.java    # 接口文档配置 (Knife4j)
+│   │   │   │   ├── MyBatisPlusConfig.java # 分页插件配置
+│   │   │   │   ├── RedisConfig.java      # 缓存配置
+│   │   │   │   └── WebMvcConfig.java     # 跨域与拦截器配置
+│   │   │   ├── controller/          # 控制器层 (Web API)
+│   │   │   │   ├── AuthController.java       # 认证相关
+│   │   │   │   ├── UserController.java       # 用户管理
+│   │   │   │   ├── TransactionController.java # 交易记录 (对应"账单"、"记账")
+│   │   │   │   ├── CategoryController.java   # 分类管理
+│   │   │   │   ├── BudgetController.java     # 预算管理
+│   │   │   │   └── ChartController.java      # 图表分析
+│   │   │   ├── service/             # 服务接口层
+│   │   │   │   ├── IUserService.java
+│   │   │   │   ├── ITransactionService.java
+│   │   │   │   ├── ICategoryService.java
+│   │   │   │   ├── IBudgetService.java
+│   │   │   │   └── IChartService.java
+│   │   │   ├── service/impl/        # 服务实现层
+│   │   │   ├── mapper/              # Mapper接口层 (DAO)
+│   │   │   ├── entity/              # 数据库实体类 (PO)
+│   │   │   └── model/               # 数据模型
+│   │   │       ├── dto/             # 数据传输对象 (Input)
+│   │   │       └── vo/              # 视图对象 (Output)
 │   │   └── resources/
-│   │       ├── mapper/          # MyBatis XML
-│   │       ├── application.yml  # 配置文件
-│   │       └── logback-spring.xml
-│   └── test/                    # 测试代码
-├── pom.xml                      # Maven 依赖
+│   │       ├── mapper/              # Mapper XML文件
+│   │       ├── application.yml      # 主配置文件
+│   │       ├── application-dev.yml  # 开发环境配置
+│   │       ├── application-prod.yml # 生产环境配置
+│   │       └── logback-spring.xml   # 日志配置
+│   └── test/                        # 测试代码
+├── pom.xml                          # Maven依赖管理
 └── README.md
 ```
 
