@@ -235,19 +235,39 @@ easy-accounting/
 │   │   │   │   ├── BudgetController.java     # 预算管理
 │   │   │   │   └── ChartController.java      # 图表分析
 │   │   │   ├── service/             # 服务接口层
-│   │   │   │   ├── IUserService.java
-│   │   │   │   ├── ITransactionService.java
-│   │   │   │   ├── ICategoryService.java
-│   │   │   │   ├── IBudgetService.java
-│   │   │   │   └── IChartService.java
+│   │   │   │   ├── UserService.java
+│   │   │   │   ├── TransactionService.java
+│   │   │   │   ├── CategoryService.java
+│   │   │   │   ├── BudgetService.java
+│   │   │   │   └── ChartService.java
 │   │   │   ├── service/impl/        # 服务实现层
+│   │   │   │   ├── UserServiceImpl.java
+│   │   │   │   ├── TransactionServiceImpl.java
+│   │   │   │   ├── CategoryServiceImpl.java
+│   │   │   │   ├── BudgetServiceImpl.java
+│   │   │   │   └── ChartServiceImpl.java
 │   │   │   ├── mapper/              # Mapper接口层 (DAO)
+│   │   │   │   ├── UserMapper.java
+│   │   │   │   ├── TransactionMapper.java
+│   │   │   │   ├── CategoryMapper.java
+│   │   │   │   ├── BudgetMapper.java
+│   │   │   │   └── UserStatsMapper.java
 │   │   │   ├── entity/              # 数据库实体类 (PO)
+│   │   │   │   ├── User.java
+│   │   │   │   ├── Transaction.java
+│   │   │   │   ├── Category.java
+│   │   │   │   ├── CategoryBudget.java
+│   │   │   │   └── UserStats.java
 │   │   │   └── model/               # 数据模型
 │   │   │       ├── dto/             # 数据传输对象 (Input)
 │   │   │       └── vo/              # 视图对象 (Output)
 │   │   └── resources/
 │   │       ├── mapper/              # Mapper XML文件
+│   │       │   ├── UserMapper.xml
+│   │       │   ├── TransactionMapper.xml
+│   │       │   ├── CategoryMapper.xml
+│   │       │   ├── BudgetMapper.xml
+│   │       │   └── UserStatsMapper.xml
 │   │       ├── application.yml      # 主配置文件
 │   │       ├── application-dev.yml  # 开发环境配置
 │   │       ├── application-prod.yml # 生产环境配置
