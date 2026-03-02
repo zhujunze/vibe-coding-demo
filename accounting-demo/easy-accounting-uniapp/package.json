@@ -1,0 +1,25 @@
+{
+  "name": "easy-accounting-uniapp",
+  "version": "1.0.0",
+  "description": "极简记账 App",
+  "main": "main.js",
+  "scripts": {
+    "dev:h5": "uni serve --mode h5",
+    "dev:mp-weixin": "uni serve --mode mp-weixin",
+    "build:h5": "uni build --mode h5",
+    "build:mp-weixin": "uni build --mode mp-weixin"
+  },
+  "dependencies": {
+    "@qiun/ucharts": "^2.5.0-20230101",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1"
+  },
+  "devDependencies": {
+    "@dcloudio/uni-ui": "^1.5.4",
+    "prettier": "^3.0.3",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2"
+  },
+  "author": "",
+  "license": "MIT"
+}
