@@ -115,8 +115,10 @@ easy-accounting-uniapp/
 │   │       ├── Setting.vue          # 设置页面
 │   │       ├── Profile.vue          # 个人信息编辑页
 │   ├── auth/                        # 认证相关页面
-│   │   ├── login.vue                # 手机号登录页
-│   │   └── SmsVerify.vue            # 短信验证码页
+│   │   ├── login.vue                # 账号密码登录页（支持手机号/邮箱）
+│   │   ├── register.vue             # 注册页面
+│   │   ├── forgot-password.vue      # 忘记密码页面（发送重置链接）
+│   │   └── reset-password.vue       # 重置密码页面（通过邮件链接访问）
 │   └── common/                      # 通用页面
 │       └── Webview.vue              # 通用WebView页面
 ├── components/                      # 公共组件（按功能模块组织）
@@ -282,26 +284,51 @@ easy-accounting/
 基于MySQL关系型数据库设计，采用Spring Boot JPA实体映射。
 
 ### 6.1 用户表 (users)
-存储用户基础信息和认证信息，支持手机号验证码注册。
+存储用户基础信息和认证信息，支持手机号/邮箱注册和密码登录。
 
 ```sql
 CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `phone` varchar(20) NOT NULL COMMENT '手机号（主登录方式）',
-  `password` varchar(255) DEFAULT NULL COMMENT '密码(BCrypt加密，可选)',
+  `phone` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  `password` varchar(255) NOT NULL COMMENT '密码(BCrypt加密)',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `avatar_url` varchar(255) DEFAULT NULL COMMENT '头像URL',
-  `status` tinyint DEFAULT 1 COMMENT '状态(1-正常，0-禁用)',
-  `register_type` varchar(20) DEFAULT 'phone' COMMENT '注册方式(phone-手机, guest-游客)',
+  `status` tinyint DEFAULT 1 COMMENT '状态(1-正常，0-禁用，2-锁定)',
+  `register_type` varchar(20) DEFAULT 'phone' COMMENT '注册方式(phone-手机, email-邮箱, guest-游客)',
+  `reset_token` varchar(255) DEFAULT NULL COMMENT '密码重置令牌',
+  `reset_token_expires_at` datetime DEFAULT NULL COMMENT '重置令牌过期时间',
+  `last_login_at` datetime DEFAULT NULL COMMENT '最后登录时间',
+  `last_login_ip` varchar(45) DEFAULT NULL COMMENT '最后登录IP',
+  `failed_login_attempts` int DEFAULT 0 COMMENT '连续登录失败次数',
+  `locked_until` datetime DEFAULT NULL COMMENT '锁定截止时间',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_phone` (`phone`),
-  KEY `idx_status` (`status`)
+  UNIQUE KEY `uk_email` (`email`),
+  KEY `idx_status` (`status`),
+  KEY `idx_reset_token` (`reset_token`(100)),
+  KEY `idx_locked_until` (`locked_until`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 ```
 
-### 6.2 账单分类表 (categories)
+### 6.2 用户密码历史表 (user_password_history)
+存储用户历史密码哈希，用于防止重复使用最近3次密码。
+
+```sql
+CREATE TABLE `user_password_history` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `password_hash` varchar(255) NOT NULL COMMENT '历史密码哈希(BCrypt加密)',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_user_created` (`user_id`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户密码历史表';
+```
+
+### 6.3 账单分类表 (categories)
 支持系统预置分类和用户自定义分类，按类型区分收入和支出。
 
 ```sql
@@ -332,7 +359,7 @@ INSERT INTO `categories` (name, type, icon, color, is_system, sort_order) VALUES
 ('兼职', 'income', 'parttime', '#FFD93D', 1, 2);
 ```
 
-### 6.3 账单记录表 (transactions)
+### 6.4 账单记录表 (transactions)
 支持快速记账流程，优化索引提升查询性能。
 
 ```sql
@@ -356,7 +383,7 @@ CREATE TABLE `transactions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单记录表';
 ```
 
-### 6.4 分类预算表 (category_budgets)
+### 6.5 分类预算表 (category_budgets)
 支持按消费类别设置月度预算，实现预算监控和预警。
 
 ```sql
@@ -376,7 +403,7 @@ CREATE TABLE `category_budgets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类预算表';
 ```
 
-### 6.5 用户统计表 (user_stats)
+### 6.6 用户统计表 (user_stats)
 缓存用户记账统计数据，提升查询性能。
 
 ```sql
@@ -399,16 +426,18 @@ CREATE TABLE `user_stats` (
 
 ### 4.1 认证相关API
 
-#### 手机号验证码登录
+#### 账号密码登录
+支持手机号或邮箱+密码方式登录。
+
 ```
-POST /api/auth/sms-login
+POST /api/auth/login
 ```
 
 请求参数：
 | 参数名 | 类型 | 必填 | 说明 |
 |--------|------|------|------|
-| phone | string | 是 | 手机号 |
-| smsCode | string | 是 | 短信验证码 |
+| account | string | 是 | 手机号或邮箱 |
+| password | string | 是 | 密码（原始密码，前端需加密传输） |
 
 响应示例：
 ```json
@@ -417,18 +446,114 @@ POST /api/auth/sms-login
   "message": "success",
   "data": {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "user": {
       "id": 1,
       "nickname": "用户昵称",
-      "avatar": "头像URL"
+      "avatar": "头像URL",
+      "phone": "13800138000",
+      "email": "user@example.com"
     }
   }
 }
 ```
 
-#### 发送短信验证码
+#### 用户注册
+支持手机号或邮箱注册，密码需符合强度要求。
+
 ```
-POST /api/auth/send-sms
+POST /api/auth/register
+```
+
+请求参数：
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| account | string | 是 | 手机号或邮箱 |
+| password | string | 是 | 密码（需包含大小写字母和数字，至少8位） |
+| confirmPassword | string | 是 | 确认密码 |
+| agreeTerms | boolean | 是 | 同意用户协议 |
+
+响应示例：
+```json
+{
+  "code": 200,
+  "message": "注册成功",
+  "data": {
+    "userId": 1,
+    "account": "13800138000"
+  }
+}
+```
+
+#### 忘记密码（发送重置链接）
+用户输入注册的手机号或邮箱，系统发送包含重置链接的邮件。
+
+```
+POST /api/auth/forgot-password
+```
+
+请求参数：
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| account | string | 是 | 注册的手机号或邮箱 |
+
+响应示例：
+```json
+{
+  "code": 200,
+  "message": "重置链接已发送到您的邮箱，请查收"
+}
+```
+
+#### 重置密码
+通过邮件中的重置链接访问，验证重置令牌后设置新密码。
+
+```
+POST /api/auth/reset-password
+```
+
+请求参数：
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| token | string | 是 | 重置令牌（从邮件链接获取） |
+| newPassword | string | 是 | 新密码 |
+| confirmPassword | string | 是 | 确认新密码 |
+
+响应示例：
+```json
+{
+  "code": 200,
+  "message": "密码重置成功，请使用新密码登录"
+}
+```
+
+#### 刷新访问令牌
+使用Refresh Token刷新Access Token。
+
+```
+POST /api/auth/refresh-token
+```
+
+请求参数：
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| refreshToken | string | 是 | 刷新令牌 |
+
+响应示例：
+```json
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+#### 用户登出
+```
+POST /api/auth/logout
 ```
 
 ### 4.2 交易记录API
@@ -572,11 +697,14 @@ POST /api/categories/custom
 -   **懒加载**: 图表组件按需加载，提升页面响应速度
 -   **uCharts优化**: 使用uCharts原生渲染，提升图表性能
 
-### 5.5 手机号验证码认证
--   **短信服务**: 集成阿里云/腾讯云短信服务
--   **验证码缓存**: Redis缓存验证码，5分钟有效期
--   **防刷机制**: 限制验证码发送频率，防止恶意调用
--   **Token续期**: JWT Token支持自动续期，避免频繁登录
+### 5.5 账号密码认证与安全
+-   **双账号支持**: 支持手机号或邮箱+密码登录，统一账号字段处理
+-   **密码安全**: BCrypt加密存储，HTTPS+请求体加密传输
+-   **登录保护**: 5次连续失败锁定30分钟，Redis记录失败次数
+-   **密码历史**: 存储最近3次密码哈希，防止重复使用
+-   **设备识别**: 记录登录设备信息，新设备需邮箱验证
+-   **会话管理**: JWT双Token机制（Access Token 7天，Refresh Token 30天）
+-   **多设备支持**: 支持多设备同时登录，可手动登出所有设备
 -   **游客模式**: 支持游客浏览，限制记账功能
 
 ### 5.6 多端数据同步
@@ -606,4 +734,347 @@ POST /api/categories/custom
 -   **H5部署**: 构建为 H5 静态文件，部署到 Web 服务器
 -   **后端部署**: Spring Boot 打包为 jar，使用 Docker 容器化部署
 -   **数据库部署**: MySQL 主从配置，确保数据安全
+
+## 6. 前端开发规范 (Frontend Development Standards)
+
+本规范适用于 UniApp 前端项目的所有开发工作，确保代码质量、可维护性和团队协作效率。
+
+### 6.1 代码格式化规范 (Prettier Configuration)
+
+#### 适用范围
+所有 `.vue`、`.js`、`.ts`、`.jsx`、`.tsx`、`.json`、`.css`、`.scss` 文件。
+
+#### 配置要求
+项目必须使用 Prettier 进行代码格式化，配置如下：
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 120,
+  "arrowParens": "avoid",
+  "endOfLine": "lf"
+}
+```
+
+#### 实施要点
+- 提交代码前必须运行 Prettier 格式化
+- 建议配置编辑器保存时自动格式化
+- 禁止手动调整格式化配置
+
+### 6.2 代码结构规范 (Code Structure Standards)
+
+#### 6.2.1 文件长度限制
+
+**适用范围**：所有源代码文件
+
+**具体要求**：
+- 单文件代码行数不超过 **300 行**
+- 超过限制时必须拆分为多个模块文件
+- 拆分后每个模块不超过 300 行
+
+**拆分原则**：
+- 保持模块逻辑完整性（相关函数和依赖一起拆分）
+- 使用明确的命名约定：
+  - 按模块编号：`Module1.js`、`Module2.js`
+  - 按功能命名：`UserService.js`、`AuthService.js`
+
+**拆分日志**：
+每次拆分需生成日志，说明：
+- 拆分原因（文件过长/函数过长/单行过长）
+- 拆分后文件名/子函数名
+
+#### 6.2.2 函数长度限制
+
+**适用范围**：所有函数和方法
+
+**具体要求**：
+- 单函数代码行数不超过 **50 行**
+- 超过限制时必须拆分为子函数
+- 拆分后每个子函数不超过 50 行
+
+**命名规则**：
+- 原函数名 + 子功能描述
+- 示例：`processData_step1`、`processData_step2`
+
+#### 6.2.3 单行长度限制
+
+**适用范围**：所有代码行
+
+**具体要求**：
+- 单行代码不超过 **120 字符**
+- 超过限制时自动换行或拆分表达式
+- 保持代码可读性，必要时引入局部变量分解复杂表达式
+
+### 6.3 组件拆分规范 (Component Splitting Standards)
+
+#### 6.3.1 UI/前端组件
+
+**适用范围**：所有 `.vue` 组件文件
+
+**具体要求**：
+- 组件文件不超过 **300 行**或包含复杂嵌套结构时拆分
+- 拆分子组件，每个子组件不超过 **150 行**
+- 保持父组件和子组件之间的 props / events 通信完整
+
+**命名规则**：
+- 父组件名 + 子组件名
+- 示例：`BillList_Item.vue`、`ChartSummary_Card.vue`
+
+#### 6.3.2 逻辑/工具函数
+
+**适用范围**：`utils/` 目录下的工具模块
+
+**具体要求**：
+- 工具模块超过 **300 行**时拆分
+- 拆分为多个工具文件：`utils_1.js`、`utils_2.js`
+- 保证原有导出接口不变（或提供兼容导出）
+
+### 6.4 命名规范 (Naming Conventions)
+
+#### 6.4.1 方法命名规范
+
+**适用范围**：所有函数和方法
+
+**命名规则**：
+- 必须使用 **camelCase**（小驼峰命名法）
+- 必须遵循以下前缀规范：
+
+| 前缀 | 用途 | 示例 |
+|------|------|------|
+| `handle` | 事件处理 | `handleLogin`、`handleClick` |
+| `get` | 数据获取 | `getUserInfo`、`getBillList` |
+| `set` | 数据设置 | `setUserInfo`、`setTheme` |
+| `format` | 数据格式化 | `formatDate`、`formatCurrency` |
+| `validate` | 数据校验 | `validateEmail`、`validatePhone` |
+| `toggle` | 状态切换 | `togglePassword`、`toggleTheme` |
+| `init` | 初始化 | `initData`、`initChart` |
+| `fetch` | 异步请求 | `fetchUserInfo`、`fetchBillList` |
+
+**布尔值方法命名**：
+- 返回布尔值的方法必须使用以下前缀：
+  - `is`：判断状态（`isValid`、`isActive`）
+  - `has`：判断存在（`hasPermission`、`hasData`）
+  - `can`：判断能力（`canEdit`、`canDelete`）
+  - `should`：判断应该（`shouldUpdate`、`shouldRender`）
+
+**禁止使用**：
+- 模糊方法名：`handleData`、`process`、`doSomething` 等
+
+#### 6.4.2 变量命名规范
+
+**适用范围**：所有变量声明
+
+**命名规则**：
+- 必须使用 **camelCase**（小驼峰命名法）
+
+**布尔变量命名**：
+- 必须使用以下前缀：
+  - `is`：`isLoading`、`isVisible`
+  - `has`：`hasError`、`hasData`
+  - `can`：`canSubmit`、`canEdit`
+  - `should`：`shouldUpdate`、`shouldRender`
+
+**数组变量命名**：
+- 必须使用复数形式
+- 示例：`users`、`transactions`、`categories`
+
+**常量命名**：
+- 必须使用 **UPPER_CASE_SNAKE_CASE**（全大写下划线）
+- 示例：`API_BASE_URL`、`MAX_RETRY_COUNT`
+
+**禁止使用**：
+- 单字符变量名（除循环变量 i、j、k 外）
+- 无意义命名：`data`、`temp`、`value` 等
+- 拼音命名
+
+#### 6.4.3 CSS Class 命名规范
+
+**适用范围**：所有样式类名
+
+**命名规则**：
+- Class 命名必须使用 **kebab-case**（短横线命名法）
+- Class 名称必须语义化，体现功能或结构
+
+**布尔状态类命名**：
+- 必须使用以下前缀：
+  - `is-active`：激活状态
+  - `is-disabled`：禁用状态
+  - `is-open`：展开状态
+  - `is-loading`：加载状态
+
+**禁止使用**：
+- 样式描述类名：`red-text`、`big-box`、`margin-top-10` 等
+- 过深嵌套（建议不超过 3 层）
+
+**复杂结构规范**：
+- 必须使用 **BEM 规范**（Block__Element--Modifier）
+- 示例：
+  ```css
+  .bill-card {}
+  .bill-card__header {}
+  .bill-card__body {}
+  .bill-card--active {}
+  ```
+
+#### 6.4.4 文件命名规范
+
+**页面文件命名**：
+- 必须语义化，并能体现路由功能
+- 必须统一使用 **CamelCase**（大驼峰命名法）
+- 首页必须使用 `index`
+- 禁止使用无意义名称：`page1`、`test`、`new` 等
+- 禁止中英文混用或拼音命名
+
+**组件文件命名**：
+- 必须统一使用 **PascalCase**（大驼峰命名法）
+- 不得混用命名风格
+
+**基础组件命名**：
+- 必须使用前缀：`Base` / `App` / `V`
+- 示例：`BaseButton.vue`、`AppHeader.vue`、`VInput.vue`
+
+**强关联子组件命名**：
+- 必须使用父组件名作为前缀
+- 示例：`BillList_Item.vue`、`ChartSummary_Card.vue`
+
+**命名要求**：
+- 必须使用完整英文单词
+- 禁止使用拼音
+- 禁止使用缩写（除通用缩写如 API、URL 外）
+
+### 6.5 代码质量规范 (Code Quality Standards)
+
+#### 6.5.1 注释规范
+
+**适用范围**：所有源代码文件
+
+**具体要求**：
+- **禁止添加注释**（除非明确要求）
+- 代码应具有自解释性，通过清晰的命名和结构表达意图
+- 仅在以下情况允许注释：
+  - 复杂算法说明
+  - 业务逻辑解释
+  - 第三方库特殊用法
+  - 临时解决方案（TODO/FIXME）
+
+#### 6.5.2 嵌套深度规范
+
+**适用范围**：所有代码块
+
+**具体要求**：
+- 禁止过深嵌套（建议不超过 3 层）
+- 超过限制时使用以下方式优化：
+  - 提前返回（Early Return）
+  - 提取为独立函数
+  - 使用逻辑运算符简化
+
+#### 6.5.3 安全规范
+
+**适用范围**：所有涉及敏感信息的代码
+
+**具体要求**：
+- 禁止暴露或记录密钥、Token 等敏感信息
+- 禁止在代码中硬编码敏感信息
+- 禁止将敏感信息提交到版本控制系统
+- 使用环境变量管理敏感配置
+
+### 6.6 实施检查清单 (Implementation Checklist)
+
+#### 代码提交前检查
+- [ ] 代码已使用 Prettier 格式化
+- [ ] 单文件不超过 300 行
+- [ ] 单函数不超过 50 行
+- [ ] 单行代码不超过 120 字符
+- [ ] 方法命名使用正确前缀（handle/get/set 等）
+- [ ] 布尔变量使用正确前缀（is/has/can/should）
+- [ ] 数组变量使用复数形式
+- [ ] 常量使用 UPPER_CASE_SNAKE_CASE
+- [ ] CSS Class 使用 kebab-case
+- [ ] 文件命名符合规范
+- [ ] 无过深嵌套（≤3 层）
+- [ ] 无敏感信息暴露
+- [ ] 无不必要的注释
+
+#### 代码审查要点
+- 命名是否语义化且符合规范
+- 代码结构是否清晰，逻辑是否完整
+- 是否存在可复用的组件或函数
+- 是否符合 UniApp 最佳实践
+- 是否考虑性能优化
+- 是否处理了异常情况
+
+### 6.7 工具配置建议 (Tool Configuration)
+
+#### Prettier 配置文件
+在项目根目录创建 `.prettierrc`：
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 120,
+  "arrowParens": "avoid",
+  "endOfLine": "lf"
+}
+```
+
+#### EditorConfig 配置文件
+在项目根目录创建 `.editorconfig`：
+
+```ini
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+```
+
+#### ESLint 配置建议
+在项目根目录创建 `.eslintrc.js`：
+
+```javascript
+module.exports = {
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended'
+  ],
+  rules: {
+    'max-len': ['error', { code: 120 }],
+    'max-lines': ['error', { max: 300 }],
+    'max-lines-per-function': ['error', { max: 50 }],
+    'camelcase': ['error', { properties: 'always' }],
+    'no-nested-ternary': 'error',
+    'max-depth': ['error', 3]
+  }
+}
+```
+
+### 6.8 规范执行与监督 (Enforcement and Supervision)
+
+#### 自动化检查
+- 配置 Git Hooks，提交前自动运行代码检查
+- 配置 CI/CD 流水线，自动检测代码规范
+- 使用 ESLint + Prettier 插件实时检查
+
+#### 代码审查
+- 所有代码必须经过 Code Review 才能合并
+- 审查者需检查代码是否符合规范
+- 不符合规范的代码必须修改后才能合并
+
+#### 持续改进
+- 定期评估规范的有效性
+- 根据项目实际情况调整规范
+- 收集团队反馈，优化规范内容
 
