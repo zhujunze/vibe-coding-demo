@@ -22,8 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -34,6 +37,10 @@ public class AuthServiceImpl implements IAuthService {
     private final ISmsService smsService;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    private final StringRedisTemplate redisTemplate;
+
+    @Value("${easy-accounting.auth.reset-pwd.expiration-minutes:15}")
+    private long resetPwdExpirationMinutes;
 
     private static final int MAX_FAILED_ATTEMPTS = 5;
     private static final int LOCKOUT_MINUTES = 15;
@@ -177,31 +184,64 @@ public class AuthServiceImpl implements IAuthService {
             throw new BusinessException(ErrorCode.USER_NOT_EXIST);
         }
 
-        // 3. 生成一次性 Token (简化使用 JWT，有效期 5 分钟)
-        // 实际场景可能需要 Redis 存储来保证一次性
-        return jwtUtil.generateToken(user.getId(), user.getPhone());
+        // 3. 生成 UUID Token 并存入 Redis
+        String token = UUID.randomUUID().toString();
+        String key = "easy-accounting:reset-pwd:" + token;
+        
+        try {
+            redisTemplate.opsForValue().set(key, String.valueOf(user.getId()), resetPwdExpirationMinutes, TimeUnit.MINUTES);
+        } catch (Exception e) {
+            log.error("Failed to store reset token in Redis for user: {}", user.getId(), e);
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR.getCode(), "系统繁忙，请稍后再试");
+        }
+        
+        return token;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(ResetPasswordRequest request) {
-        // 1. 验证 Token
-        if (!jwtUtil.validateToken(request.getToken())) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
+        String token = request.getToken();
+        String key = "easy-accounting:reset-pwd:" + token;
+        
+        // 1. 查询 Redis 获取用户ID
+        String userIdStr;
+        try {
+            userIdStr = redisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            log.error("Failed to retrieve reset token from Redis: {}", token, e);
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR.getCode(), "系统繁忙，请稍后再试");
+        }
+
+        if (StrUtil.isBlank(userIdStr)) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR.getCode(), "凭证已失效或不存在");
         }
         
-        Long userId = jwtUtil.getUserIdFromToken(request.getToken());
+        // 2. 删除 Redis Key (保证一次性)
+        Boolean deleted;
+        try {
+            deleted = redisTemplate.delete(key);
+        } catch (Exception e) {
+            log.error("Failed to delete reset token from Redis: {}", token, e);
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR.getCode(), "系统繁忙，请稍后再试");
+        }
+
+        if (deleted == null || !deleted) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR.getCode(), "凭证已失效");
+        }
+        
+        Long userId = Long.parseLong(userIdStr);
         User user = userService.getById(userId);
         if (user == null) {
             throw new BusinessException(ErrorCode.USER_NOT_EXIST);
         }
 
-        // 2. 验证新密码不能与旧密码相同 (可选)
+        // 3. 验证新密码不能与旧密码相同 (可选)
         if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
             throw new BusinessException(ErrorCode.PARAM_ERROR.getCode(), "新密码不能与旧密码相同");
         }
 
-        // 3. 更新密码
+        // 4. 更新密码
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userService.updateById(user);
         log.info("Password reset successfully for user: {}", userId);

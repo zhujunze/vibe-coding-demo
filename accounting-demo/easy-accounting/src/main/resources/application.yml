@@ -12,6 +12,11 @@ spring:
   profiles:
     active: dev # 默认开发环境，生产部署时通过 --spring.profiles.active=prod 覆盖
 
+easy-accounting:
+  auth:
+    reset-pwd:
+      expiration-minutes: 15
+
 management:
   endpoints:
     web:
