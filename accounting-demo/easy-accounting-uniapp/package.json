@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@qiun/ucharts": "^2.5.0-20230101",
+    "axios": "^1.13.6",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1"
   },
