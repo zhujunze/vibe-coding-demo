@@ -1,6 +1,36 @@
 {
 	"pages": [
 		{
+			"path": "pages/auth/Login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/auth/Register",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/auth/ForgotPassword",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "忘记密码",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path": "pages/auth/ResetPassword",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "重置密码",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
 			"path": "pages/tabBar/bill/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -41,12 +71,6 @@
 			"style": {
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "我的"
-			}
-		},
-		{
-			"path": "pages/auth/Login",
-			"style": {
-				"navigationBarTitleText": "登录"
 			}
 		}
 	],
